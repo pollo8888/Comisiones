@@ -788,132 +788,40 @@
 
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<?php
+<script>
+$(document).ready(function () {
+    $('#btnGuardarAjax').click(function () {
+        var formData = new FormData(document.getElementById("formAgregarComision"));
 
+        $.ajax({
+            url: 'CRUD/contextos/guardar_comision.php', // o el archivo que procesa el formulario
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Comisión guardada correctamente',
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(() => {
+                    window.location.href = "inicio.php";
+                });
+            },
+            error: function (xhr, status, error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'No se pudo guardar la comisión. Verifica la conexión o los datos.'
+                });
+                console.error('Error AJAX:', xhr.responseText);
+            }
+        });
+    });
+});
+</script>
 
-
-if (isset($_POST["agregar"])) {
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "comisiones";
-
-    // Creamos la conexión
-    $conn = new mysqli($servername, $username, $password, $dbname);
-
-    // Revisamos la conexión
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-
-    // Recuperamos los datos del formulario
-    $folio = $_POST['folio'];
-    $fecha_comision_num = $_POST['fecha_comision_num'];
-    $nombre_comisionado = $_POST['nombre_comisionado'];
-    $matricula = $_POST['matricula'];
-    $telefono = $_POST['telefono'];
-    $categoria = $_POST['categoria'];
-    $adscripcion = $_POST['adscripcion'];
-    $plaza = $_POST['plaza'];
-    $puesto_comisionado = $_POST['puesto_comisionado'];
-    $um_destino = $_POST['um_destino'];
-    $turno = $_POST['turno'];
-    $horas_turno = $_POST['horas_turno'];
-    $fecha_inicio_num = $_POST['fecha_inicio_num'];
-    $fecha_termino_num = $_POST['fecha_termino_num'];
-    $ano_comision = $_POST['ano_comision'];
-    $justificacion = $_POST['justificacion'];
-    $director = $_POST['director'];
-    $director_adscripcion = $_POST['director_adscripcion'];
-    $numero_comisiones = $_POST['numero_comisiones'];
-    $estatus = $_POST['estatus'];
-    $fecha_solicitud = $_POST['fecha_solicitud'];
-    $medio_solicitud = $_POST['medio_solicitud'];
-    $fecha_recepcion_personal = $_POST['fecha_recepcion_personal'];
-
-    // Array para reemplazar los meses de inglés a español
-    $meses_espanol = [
-        'January' => 'enero',
-        'February' => 'febrero',
-        'March' => 'marzo',
-        'April' => 'abril',
-        'May' => 'mayo',
-        'June' => 'junio',
-        'July' => 'julio',
-        'August' => 'agosto',
-        'September' => 'septiembre',
-        'October' => 'octubre',
-        'November' => 'noviembre',
-        'December' => 'diciembre'
-    ];
-
-    // Función para convertir fechas a formato de texto en español
-    function fechaEnTexto($fecha, $meses_espanol, $incluye_anio = true)
-    {
-        $timestamp = strtotime($fecha);
-        $mes_ingles = date("F", $timestamp);
-        $mes_espanol = $meses_espanol[$mes_ingles];
-        $dia = date("d", $timestamp);
-
-        if ($incluye_anio) {
-            $anio = date("Y", $timestamp);
-            return "$dia de $mes_espanol del $anio";
-        } else {
-            return "$dia de $mes_espanol";
-        }
-    }
-
-    // Convertimos las fechas
-    $fecha_comision = fechaEnTexto($fecha_comision_num, $meses_espanol); // Ejemplo: 13 de octubre del 2024
-    $fecha_inicio = fechaEnTexto($fecha_inicio_num, $meses_espanol, false); // Ejemplo: 13 de octubre (sin año)
-    $fecha_termino = fechaEnTexto($fecha_termino_num, $meses_espanol, false); // Ejemplo: 15 de octubre (sin año)
-
-    // Insertamos los datos en la tabla
-    $sql2 = "INSERT INTO comisiones (
-                folio, fecha_comision_num, fecha_comision, nombre_comisionado, matricula, telefono, categoria,
-                adscripcion, plaza, puesto_comisionado, um_destino, turno, horas_turno, 
-                fecha_inicio_num, fecha_inicio, fecha_termino_num, fecha_termino, ano_comision, justificacion, director, 
-                director_adscripcion, numero_comisiones, estatus, fecha_solicitud, medio_solicitud, 
-                fecha_recepcion_personal
-            ) VALUES (
-                '$folio', '$fecha_comision_num', '$fecha_comision', '$nombre_comisionado', '$matricula', '$telefono', 
-                '$categoria', '$adscripcion', '$plaza', '$puesto_comisionado', '$um_destino', '$turno', 
-                '$horas_turno', '$fecha_inicio_num', '$fecha_inicio', '$fecha_termino_num', '$fecha_termino', 
-                '$ano_comision', '$justificacion', '$director', '$director_adscripcion', '$numero_comisiones', 
-                '$estatus', '$fecha_solicitud', '$medio_solicitud', '$fecha_recepcion_personal'
-            )";
-
-    if (mysqli_query($conn, $sql2)) {
-        ?>
-        <script type="text/javascript">
-            Swal.fire({
-                position: 'top-end',
-                icon: 'success',
-                title: 'Agregado correctamente',
-                showConfirmButton: false,
-                timer: 1500
-            }).then(function () {
-                window.location = "index.php";
-            });
-        </script>
-        <?php
-    } else {
-        ?>
-        <script type="text/javascript">
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'No se pudo guardar!'
-            })
-        </script>
-        <?php
-        echo "Error: " . $sql2 . "<br>" . mysqli_error($conn);
-    }
-
-    // Cerramos la conexión
-    $conn->close();
-}
-?>
 
 
 

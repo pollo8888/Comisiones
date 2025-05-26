@@ -17,7 +17,7 @@
             <div class="modal-body">
                 <div class="container-fluid">
                     <div class="card-body">
-                        <form method="POST" autocomplete="off" enctype="multipart/form-data">
+                        <form id="formAgregarComision" method="POST" autocomplete="off" enctype="multipart/form-data">
                             <div class="row">
                                 <!-- Campos del formulario con sus IDs -->
                                 <div class="col-md-6">
@@ -147,7 +147,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group form-group-default">
                                         <label>Número de Comisiones</label>
-                                        <input name="numero_comisiones" id="numero_comisiones" type="number"
+                                        <input value="1" name="numero_comisiones" id="numero_comisiones" type="number" 
                                             class="form-control" required placeholder="Ingrese número de comisiones"
                                             readonly>
                                     </div>
@@ -193,7 +193,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                                <button type="submit" name="agregar" class="btn btn-primary">Guardar Registro</button>
+                                <button type="button" id="btnGuardarAjax" class="btn btn-primary">Guardar Registro</button>
                             </div>
                         </form>
                     </div>

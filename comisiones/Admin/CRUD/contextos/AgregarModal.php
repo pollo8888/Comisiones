@@ -98,6 +98,7 @@
                                             <option value="Matutino">Matutino</option>
                                             <option value="Vespertino">Vespertino</option>
                                             <option value="Nocturno">Nocturno</option>
+                                            <option value="Jornada Acomulada">Jornada Acomulada</option>
                                         </select>
                                     </div>
                                 </div>

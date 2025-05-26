@@ -98,6 +98,12 @@
                                     <option value="Nocturno" <?php if ($row['turno'] == 'Nocturno')
                                         echo 'selected'; ?>>
                                         Nocturno</option>
+
+
+                                    <option value="Jornada Acomulada" <?php if ($row['turno'] == 'Jornada Acomulada')
+                                        echo 'selected'; ?>>
+                                        Jornada Acomulada</option>
+                                       
                                 </select>
                             </div>
                         </div>
